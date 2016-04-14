@@ -12,4 +12,9 @@ public class Collision {
         object1 = ob1;
         object2 = ob2;
     }
+
+    public boolean checkIfSame(GameObject ob1, GameObject ob2)
+    {
+        return (ob1.equals(object1) || ob1.equals(object2) && ob2.equals(object1) || ob2.equals(object2));
+    }
 }

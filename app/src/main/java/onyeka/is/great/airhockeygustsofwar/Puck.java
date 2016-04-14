@@ -2,6 +2,8 @@ package onyeka.is.great.airhockeygustsofwar;
 
 import android.widget.ImageView;
 
+import java.util.Random;
+
 /**
  * Created by John on 4/9/2016.
  */
@@ -42,12 +44,18 @@ public class Puck extends GameObject {
             yPos = GameView.screenHeight - height;
         }
 
+        yVelocity *= GameView.DEFAULT_PUCK_FRICTION;
+        xVelocity *= GameView.DEFAULT_PUCK_FRICTION;
+
     }
 
+    @Override
     public void reset() {
-        xAccel = yAccel = xVelocity = yVelocity = 0;
-        xPos = GameView.screenWidth / 2 - width / 2;
-        yPos = GameView.screenHeight / 2 - height / 2;
+        Random rand = new Random();
+        xVelocity = (rand.nextFloat() - .5) * 5;
+        yVelocity = (rand.nextFloat() - .5) * 5;
+        xPos = GameView.screenWidth / 2;
+        yPos = GameView.screenHeight / 2;
     }
 
     @Override

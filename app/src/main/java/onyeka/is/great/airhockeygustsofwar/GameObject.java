@@ -11,7 +11,7 @@ public class GameObject {
 
     public String name;
     protected ImageView image;
-    protected int xPos, yPos, width, height;
+    protected int xPos, yPos, width, height, targetX, targetY;
     protected double xVelocity, yVelocity, xAccel, yAccel;
     protected double topSpeed, maxAccel;
 
@@ -47,6 +47,11 @@ public class GameObject {
         xAccel = 0;
         yAccel = 0;
         name = n;
+    }
+
+    public void reset()
+    {
+
     }
 
     public void update(double interval)

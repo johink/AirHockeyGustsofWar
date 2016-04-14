@@ -28,12 +28,13 @@ import java.util.List;
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     public static final String DEBUG_TAG = "Gusts of War";
-    public static final int PADDLE_DEFAULT_MAX_SPEED = 20;
-    public static final int PADDLE_DEFAULT_MAX_ACCEL = 4;
+    public static final int PADDLE_DEFAULT_MAX_SPEED = 30;
+    public static final int PADDLE_DEFAULT_MAX_ACCEL = 6;
     public static final int PUCK_DEFAULT_MAX_SPEED = 50;
     public static final int PUCK_DEFAULT_MAX_ACCEL = 20;
     public static final int MAX_FPS = 30;
     public static final float DEFAULT_FRICTION = .98f;
+    public static final float DEFAULT_PUCK_FRICTION = .995f;
     public static final float DEFAULT_COLLISION_DAMPENING = .9f;
     public static final int PUCK_SIZE = 100;
     public static final int PADDLE_SIZE = 150;
@@ -165,22 +166,17 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             go.update(interval);
         }
 
-        if(!collision) {
-            for (int i = 0; i < gameObjectList.size(); i++) {
-                for (int j = i + 1; j < gameObjectList.size(); j++) {
-                    GameObject ob1 = gameObjectList.get(i);
-                    GameObject ob2 = gameObjectList.get(j);
+        for (int i = 0; i < gameObjectList.size(); i++) {
+            for (int j = i + 1; j < gameObjectList.size(); j++) {
+                GameObject ob1 = gameObjectList.get(i);
+                GameObject ob2 = gameObjectList.get(j);
 
-                    double distance = Math.sqrt(Math.pow(ob1.xPos - ob2.xPos, 2) + Math.pow(ob1.yPos - ob2.yPos, 2));
-                    if (distance < ob1.width / 2 + ob2.width / 2) {
-                        collide(ob1, ob2);
-                        collision = true;
-                    }
-                }
+                double distance = Math.sqrt(Math.pow(ob1.xPos - ob2.xPos, 2) + Math.pow(ob1.yPos - ob2.yPos, 2));
+                if (distance < ob1.width / 2 + ob2.width / 2) {
+                        collide(ob1, ob2);}
             }
         }
-        else
-            collision = false;
+
     }
 
     private void collide(GameObject ob1, GameObject ob2) {
@@ -204,18 +200,18 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         double deltaY = ob1.yPos - ob2.yPos;
         double deltaLength = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
-        double scaleFactor = (ob1.width + ob2.width - deltaLength / 2) / deltaLength;
+        double scaleFactor = (ob1.width / 2 + ob2.width / 2 - deltaLength) / deltaLength;
         deltaX *= scaleFactor;
         deltaY *= scaleFactor;
 
-        double inverseMass1 = 1 / ob1.getMass();
-        double inverseMass2 = 1 / ob2.getMass();
+        double inverseMass1 = 1.f / ob1.getMass();
+        double inverseMass2 = 1.f / ob2.getMass();
 
         //Push them away so they don't get stuck
-        ob1.xPos += (int) (ob1.xPos + deltaX * inverseMass1 / (inverseMass1 + inverseMass2));
-        ob1.yPos += (int) (ob1.yPos + deltaY * inverseMass1 / (inverseMass1 + inverseMass2));
-        ob2.xPos += (int) (ob2.xPos - deltaX * inverseMass2 / (inverseMass1 + inverseMass2));
-        ob2.yPos += (int) (ob2.yPos - deltaY * inverseMass2 / (inverseMass1 + inverseMass2));
+        ob1.xPos += (int) (deltaX * (inverseMass1 / (inverseMass1 + inverseMass2)));
+        ob1.yPos += (int) (deltaY * (inverseMass1 / (inverseMass1 + inverseMass2)));
+        ob2.xPos -= (int) (deltaX * (inverseMass2 / (inverseMass1 + inverseMass2)));
+        ob2.yPos -= (int) (deltaY * (inverseMass2 / (inverseMass1 + inverseMass2)));
     }
 
     public void drawGameObjects()
@@ -264,7 +260,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                 previousTime = currentTime;
                 if(checkForScore())
                 {
-                    //TODO something?
+                    for(GameObject go : gameObjectList)
+                    {
+                        go.reset();
+                    }
                 }
 
                 if(elapsedTimeMS < 1000 / MAX_FPS)
@@ -298,20 +297,18 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     private boolean checkForScore() {
-        if(thePuck.xPos >= screenWidth / 2 - 100 && thePuck.xPos <= screenWidth / 2 + 100)
+        if(thePuck.xPos >= screenWidth / 2 - 60 && thePuck.xPos <= screenWidth / 2 + 140)
         {
             if(thePuck.yPos <= 150)
             {
                 Log.d(DEBUG_TAG, "P2 scores!");
                 players.get(0).Points++;
-                thePuck.reset();
                 return true;
             }
             else if(thePuck.yPos >= screenHeight - 100)
             {
                 Log.d(DEBUG_TAG, "P1 scores!");
                 players.get(1).Points++;
-                thePuck.reset();
                 return true;
             }
         }
