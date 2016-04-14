@@ -101,6 +101,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         parentLayout.addView(p1Paddle);
         parentLayout.addView(p2Paddle);
 
+        // constants?
         Paddle p1 = new Paddle(p1Paddle,screenWidth/2 - PADDLE_SIZE / 2, PADDLE_SIZE / 2, PADDLE_SIZE, PADDLE_SIZE, PADDLE_DEFAULT_MAX_SPEED, PADDLE_DEFAULT_MAX_ACCEL, "P1 Paddle");
         Paddle p2 = new Paddle(p2Paddle,screenWidth/2 - PADDLE_SIZE / 2, screenHeight - (int)(PADDLE_SIZE * 1.5), PADDLE_SIZE, PADDLE_SIZE, PADDLE_DEFAULT_MAX_SPEED, PADDLE_DEFAULT_MAX_ACCEL, "P2 Paddle");
         Puck puck = new Puck(puckPic, screenWidth/2 - PUCK_SIZE / 2, screenHeight/2 - PUCK_SIZE / 2 ,PUCK_SIZE, PUCK_SIZE, PUCK_DEFAULT_MAX_SPEED, PUCK_DEFAULT_MAX_ACCEL, "Puck");
