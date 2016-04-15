@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context="onyeka.is.great.airhockeygustsofwar.TitleActivity"
-    android:id="@+id/titleLayout">
+    android:id="@+id/titleLayout"
+    android:background="@drawable/title_background">
 
 <!--    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -33,4 +34,19 @@
         android:layout_margin="@dimen/fab_margin"
         android:src="@android:drawable/ic_dialog_email" />-->
 
+    <ViewAnimator
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/viewAnimator"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:animateFirstView="true">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/alt_logoView"
+            android:src="@drawable/gow_logo"
+            android:clickable="true" />
+    </ViewAnimator>
 </RelativeLayout>

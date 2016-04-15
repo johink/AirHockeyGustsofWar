@@ -11,7 +11,7 @@ import android.widget.RelativeLayout;
 
 public class TitleActivity extends AppCompatActivity {
 
-    private ImageView imageView;
+    private ImageView iv_logo;
     private Context context;
     private RelativeLayout titleLayout;
     View.OnClickListener listener = new View.OnClickListener() {
@@ -29,12 +29,13 @@ public class TitleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_title);
 
         context = this;
-        imageView = new ImageView(this);
+        iv_logo = new ImageView(this);
+
         titleLayout = (RelativeLayout) findViewById(R.id.titleLayout);
         titleLayout.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
-        titleLayout.addView(imageView);
+        titleLayout.addView(iv_logo);
 
-        imageView.setImageDrawable(getResources().getDrawable(R.drawable.gow_logo));
-        imageView.setOnClickListener(listener);
+        iv_logo.setImageDrawable(getResources().getDrawable(R.drawable.gow_logo));
+        iv_logo.setOnClickListener(listener);
     }
 }
