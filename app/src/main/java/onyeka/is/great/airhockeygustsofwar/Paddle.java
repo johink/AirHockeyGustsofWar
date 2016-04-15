@@ -17,7 +17,7 @@ public class Paddle extends GameObject {
 
     Player player;
     public int section;
-    int targetX, targetY;
+    int resetX, resetY;
     double xWeight, yWeight, accelWeight;
     int inertiaFactor = 3;
     public boolean held, reading;
@@ -63,7 +63,9 @@ public class Paddle extends GameObject {
     {
         super(iv, x, y, w, h, maxSpd, maxAcc, xVelo, yVelo, xAcc, yAcc, name);
         targetX = xPos;
+        resetX = xPos;
         targetY = yPos;
+        resetY = yPos;
         mass = 10;
 
         image.setOnTouchListener(paddleListener);
@@ -73,6 +75,8 @@ public class Paddle extends GameObject {
         super(iv, x, y, w, h, maxSpd, maxAcc, name);
         targetX = xPos;
         targetY = yPos;
+        resetX = xPos;
+        resetY = yPos;
         mass = 10;
 
         image.setOnTouchListener(paddleListener);
@@ -105,7 +109,7 @@ public class Paddle extends GameObject {
                 double deltaXSquared = deltaX * deltaX;
                 double deltaYSquared = deltaY * deltaY;
 
-                accelWeight = (Math.abs(deltaX) + Math.abs(deltaY)) / (width + height * 1.f) / 3;
+                accelWeight = (Math.abs(deltaX) + Math.abs(deltaY)) / (width + height * 1.f) / 2;
 
                 if (accelWeight > 1)
                     accelWeight = 1.0;
@@ -188,5 +192,12 @@ public class Paddle extends GameObject {
 
         //Log.d(GameView.DEBUG_TAG, name + "'s angle: " + getAngle());
         //Log.d(GameView.DEBUG_TAG, "xVel: " + xVelocity + ", yVel: " + yVelocity + ", xAcc: " + xAccel + ", yAcc: " + yAccel);
+    }
+
+    @Override
+    public void reset() {
+        xAccel = yAccel = xVelocity = yVelocity = 0;
+        xPos = resetX;
+        yPos = resetY;
     }
 }
