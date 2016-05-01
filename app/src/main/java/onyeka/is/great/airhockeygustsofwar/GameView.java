@@ -48,7 +48,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public static int screenWidth, screenHeight;
     private LayoutInflater layoutInflater;
     private Context _context;
-    private boolean collision = false;
+    private boolean collision = false, setup = false;
     private Puck thePuck;
     private TextView p1Score, p2Score;
 
@@ -77,9 +77,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         screenHeight = h;
 
         newGame();
+        setup = true;
     }
 
     private void newGame() {
+        if(setup)
+            return;
         ImageView background = (ImageView) layoutInflater.inflate(R.layout.game_object, null);
         background.setImageResource(R.drawable.background);
         background.setLayoutParams(new RelativeLayout.LayoutParams(screenWidth, screenHeight));

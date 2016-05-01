@@ -14,6 +14,6 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="title_activity_title">TitleActivity</string>
+    <string name="title_activity_title">Air Hockey: Gusts of War</string>
     <string name="scoreboard">Player %1$d: %2$d</string>
 </resources>
