@@ -17,7 +17,7 @@ public class TitleActivity extends AppCompatActivity {
     View.OnClickListener listener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent mIntent = new Intent(context, MainActivity.class);
+            Intent mIntent = new Intent(context, MainMenuActivity.class);
             // mIntent.setAction("android.intent.ACTION.VIEW");
             startActivity(mIntent);
         }

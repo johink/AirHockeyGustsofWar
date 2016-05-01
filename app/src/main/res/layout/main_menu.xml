@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Gusts of War!"
+        android:id="@+id/textView"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight=".5" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Single Player"
+            android:id="@+id/btnSingle"
+            android:enabled="false"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Local Multiplayer"
+            android:id="@+id/btnLocal"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Online Multiplayer"
+            android:id="@+id/btnOnline"
+            android:layout_gravity="center_horizontal"
+            android:enabled="false" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Share With a Friend"
+            android:id="@+id/btnShare"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
+</LinearLayout>

@@ -24,7 +24,16 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".MainMenuActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".TitleActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_title"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>

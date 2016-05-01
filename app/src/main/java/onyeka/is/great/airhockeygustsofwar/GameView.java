@@ -18,6 +18,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,12 +50,16 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private Context _context;
     private boolean collision = false;
     private Puck thePuck;
+    private TextView p1Score, p2Score;
 
     public GameView(Context context, RelativeLayout parent)
     {
         super(context);
 
         getHolder().addCallback(this);
+
+        p1Score = (TextView) parent.findViewById(R.id.txtP1Score);
+        p2Score = (TextView) parent.findViewById(R.id.txtP2Score);
 
         parentLayout = parent;
         _context = context;
@@ -116,6 +121,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         players.add(new Player("Player one", 1, p1));
         players.add(new Player("Player two", 2, p2));
 
+        updateCharts();
     }
 
 
@@ -297,19 +303,34 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         }
     }
 
+    private void updateCharts(){
+        ((Activity) _context).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                p2Score.bringToFront();
+                p1Score.bringToFront();
+                p1Score.setText(getResources().getString(R.string.scoreboard, 1, players.get(0).Points));
+                p2Score.setText(getResources().getString(R.string.scoreboard,2,players.get(1).Points));
+            }
+        });
+
+    }
+
     private boolean checkForScore() {
         if(thePuck.xPos >= screenWidth / 2 - 60 && thePuck.xPos <= screenWidth / 2 + 140)
         {
             if(thePuck.yPos <= 150)
             {
                 Log.d(DEBUG_TAG, "P2 scores!");
-                players.get(0).Points++;
+                players.get(1).Points++;
+                updateCharts();
                 return true;
             }
             else if(thePuck.yPos >= screenHeight - 100)
             {
                 Log.d(DEBUG_TAG, "P1 scores!");
-                players.get(1).Points++;
+                players.get(0).Points++;
+                updateCharts();
                 return true;
             }
         }
