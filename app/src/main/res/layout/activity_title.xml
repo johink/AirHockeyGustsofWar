@@ -8,45 +8,53 @@
     android:fitsSystemWindows="true"
     tools:context="onyeka.is.great.airhockeygustsofwar.TitleActivity"
     android:id="@+id/titleLayout"
-    android:background="@drawable/title_background">
+    android:background="@drawable/blood_on_ice_cropped">
 
-<!--    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/PopupOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
-
-    <include layout="@layout/content_title" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_dialog_email" />-->
+        android:id="@+id/logoView"
+        android:layout_centerInParent="true"
+        android:src="@drawable/gow_logo_new" />
 
-    <ViewAnimator
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/viewAnimator"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:animateFirstView="true">
+        android:visibility="visible"
+        android:id="@+id/mainMenuLayout"
+        android:layout_centerInParent="true"
+        android:alpha="0">
 
-        <ImageView
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/alt_logoView"
-            android:src="@drawable/gow_logo"
-            android:clickable="true" />
-    </ViewAnimator>
+            android:text="Single Player"
+            android:id="@+id/btnSingle"
+            android:enabled="false"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Local Multiplayer"
+            android:id="@+id/btnLocal"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Online Multiplayer"
+            android:id="@+id/btnOnline"
+            android:layout_gravity="center_horizontal"
+            android:enabled="false" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Share With a Friend"
+            android:id="@+id/btnShare"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
+
 </RelativeLayout>
