@@ -1,8 +1,10 @@
 package onyeka.is.great.airhockeygustsofwar;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
@@ -33,6 +35,17 @@ public class MainMenuActivity extends AppCompatActivity {
             smsIntent.putExtra("address", "8675309");
             smsIntent.putExtra("sms_body","Hey, check out this game!  \"Air Hockey:  Gusts of War\", available on the Google Play Store!");
             startActivity(smsIntent);
+        }
+    };
+
+    View.OnLongClickListener playerListener = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View v) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+
+
+            return true;
         }
     };
 

@@ -3,6 +3,7 @@ package onyeka.is.great.airhockeygustsofwar;
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,9 +13,9 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Space;
 
 import java.util.List;
 
@@ -33,16 +34,12 @@ public class TitleActivity extends AppCompatActivity {
         final ImageView logo = (ImageView) findViewById(R.id.logoView);
         titleLayoutGroup = (ViewGroup) findViewById(R.id.titleLayout);
         mainMenuLayout = (LinearLayout) findViewById(R.id.mainMenuLayout);
-        AnimationSet animationSet = new AnimationSet(true);
+        // AnimationSet animationSet = new AnimationSet(true);
         // AnimatorSet animatorSet = new AnimatorSet();
         // AnimatorInflater animatorInflater = new AnimatorInflater();
 
-
-
         final Animation fadeinAnimation =
                 AnimationUtils.loadAnimation(this, R.anim.logo_fadein_anim); // title logo fades in
-        final Animation scrollUpAnimation =
-                AnimationUtils.loadAnimation(this, R.anim.logo_scrollup_anim); // title logo scrolls up
         final Animation menu_fadeInAnimation =
                 AnimationUtils.loadAnimation(this, R.anim.mainmenu_fadein_anim); // main menu fades in
 
@@ -58,8 +55,10 @@ public class TitleActivity extends AppCompatActivity {
 
              @Override
              public void onAnimationEnd(Animation animation) {
-                 logo.clearAnimation();
-                scrollUpAnimation.start();
+                 ObjectAnimator transAnimation = ObjectAnimator.ofFloat(logo, "translationY", -450);
+                 transAnimation.setInterpolator(new LinearInterpolator());
+                 transAnimation.setDuration(2000);
+                 transAnimation.start();
              }
 
              @Override
@@ -67,30 +66,11 @@ public class TitleActivity extends AppCompatActivity {
 
              }
          });
-
-        scrollUpAnimation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-                mainMenuLayout.setAlpha(1);
-                scrollUpAnimation.start();
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                logo.clearAnimation();
-                menu_fadeInAnimation.start();
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-
+/*
         menu_fadeInAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-                menu_fadeInAnimation.start();
+
             }
 
             @Override
@@ -103,21 +83,14 @@ public class TitleActivity extends AppCompatActivity {
 
             }
         });
+*/
 
         logo.startAnimation(fadeinAnimation);
-
-
-        // animatorSet.playSequentially(fadeinAnimation);
-
-        // logo.startAnimation(scrollUpAnimation);
-        //mainMenuLayout.startAnimation(menu_fadeInAnimation);
-
-
+        mainMenuLayout.startAnimation(menu_fadeInAnimation);
 
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                moveLogo();
                 mainMenu();
             }
         };
@@ -126,10 +99,6 @@ public class TitleActivity extends AppCompatActivity {
         //logo.setOnClickListener(listener);
     }
 
-    public void moveLogo()
-    {
-
-    }
 
     public void mainMenu()
     {
