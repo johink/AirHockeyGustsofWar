@@ -2,6 +2,7 @@ package onyeka.is.great.airhockeygustsofwar;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -51,6 +52,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private boolean collision = false, setup = false;
     private Puck thePuck;
     private TextView p1Score, p2Score;
+    private SharedPreferences sharedPref;
 
     public GameView(Context context, RelativeLayout parent)
     {
@@ -67,6 +69,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         gameObjectList = new ArrayList<>();
 
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        sharedPref = context.getSharedPreferences(TitleActivity.GAME_NAME,Context.MODE_PRIVATE);
 
         //TODO build the soundpool
     }
@@ -121,8 +125,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         thePuck = puck;
 
-        players.add(new Player("Player one", 1, p1));
-        players.add(new Player("Player two", 2, p2));
+        players.add(new Player(sharedPref.getString(TitleActivity.P1_NAME,"Player One"), 1, p1));
+        players.add(new Player(sharedPref.getString(TitleActivity.P2_NAME, "Player Two"), 2, p2));
 
         updateCharts();
     }
@@ -312,8 +316,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             public void run() {
                 p2Score.bringToFront();
                 p1Score.bringToFront();
-                p1Score.setText(getResources().getString(R.string.scoreboard, 1, players.get(0).Points));
-                p2Score.setText(getResources().getString(R.string.scoreboard,2,players.get(1).Points));
+                p1Score.setText(getResources().getString(R.string.scoreboard, players.get(0).PlayerName, players.get(0).Points));
+                p2Score.setText(getResources().getString(R.string.scoreboard,players.get(1).PlayerName,players.get(1).Points));
             }
         });
 

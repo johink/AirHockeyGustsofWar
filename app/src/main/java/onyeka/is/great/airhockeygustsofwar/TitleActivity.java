@@ -28,12 +28,15 @@ public class TitleActivity extends AppCompatActivity {
     LinearLayout mainMenuLayout;
     Button btnSingle, btnLocal, btnOnline, btnShare;
     SharedPreferences sharedPref;
-    SharedPreferences.Editor editor;
+    public static final String GAME_NAME = "Air Hockey: Gusts of War";
+    public static final String P1_NAME = "P1 Name";
+    public static final String P2_NAME = "P2 Name";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_title);
         context = this;
+        sharedPref = this.getSharedPreferences(GAME_NAME,MODE_PRIVATE);
 
         final ImageView logo = (ImageView) findViewById(R.id.logoView);
         titleLayoutGroup = (ViewGroup) findViewById(R.id.titleLayout);
@@ -94,10 +97,13 @@ public class TitleActivity extends AppCompatActivity {
             @Override
             public boolean onLongClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                RelativeLayout rl = new RelativeLayout(context);
-                Button dialog_button_next, dialog_button_cancel;
-                final EditText editText = new EditText(context);
+                LinearLayout rl = new LinearLayout(context);
+                final EditText editText1 = new EditText(context);
+                final EditText editText2 = new EditText(context);
                 builder.setTitle(getString(R.string.dialog_title));
+
+                editText1.setText(sharedPref.getString(P1_NAME, "Player One"));
+                editText2.setText(sharedPref.getString(P2_NAME, "Player Two"));
 
                 LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -111,9 +117,12 @@ public class TitleActivity extends AppCompatActivity {
                 builder.setPositiveButton(getString(R.string.dialog_button_next), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        sharedPref = TitleActivity.this.getSharedPreferences("NAME", context.MODE_PRIVATE);
-                        String name = editText.getText().toString();
-                        editor.putString(getString(R.string.sharedprefs_playername_key), name);
+                        String name = editText1.getText().toString();
+                        String name2 = editText2.getText().toString();
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putString(P1_NAME, name);
+                        editor.putString(P2_NAME, name2);
+                        editor.commit();
                         // saves name to SharedPreferences
                     }
                 });
@@ -125,7 +134,8 @@ public class TitleActivity extends AppCompatActivity {
                     }
                 });
 
-                rl.addView(editText, textParams);
+                rl.addView(editText1, textParams);
+                rl.addView(editText2, textParams);
                 builder.setView(rl);
 
                 builder.show();
